@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { choice } from "../helper";
 
 class CoinContainer extends Component {
   static defaultProps = {
@@ -15,11 +16,28 @@ class CoinContainer extends Component {
       numHeads: 0,
       numTails: 0
     };
+    this.handleClick = this.handleClick.bind(this);
   }
+
+  flipCoin() {
+    const newCoin = choice(this.props.coins);
+    this.setState(curState => {
+      return {
+        currentCoin: newCoin,
+        numFlips: curState.numFlips + 1
+      };
+    });
+  }
+
+  handleClick(event) {
+    this.flipCoin();
+  }
+
   render() {
     return (
       <div className="CoinContainer">
         <h2>Heads or Tails?</h2>
+        <button onClick={this.handleClick}>Flip The Coin</button>
         <p>
           Out of {this.state.numFlips}, there have been {this.state.numHeads}{" "}
           heads and {this.state.numTails} tails
