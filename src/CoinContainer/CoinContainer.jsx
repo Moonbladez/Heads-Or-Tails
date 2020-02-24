@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { choice } from "../helper";
+import Coin from "../Coin/Coin";
 
 class CoinContainer extends Component {
   static defaultProps = {
@@ -24,7 +25,9 @@ class CoinContainer extends Component {
     this.setState(curState => {
       return {
         currentCoin: newCoin,
-        numFlips: curState.numFlips + 1
+        numFlips: curState.numFlips + 1,
+        numHeads: curState.numHeads + (newCoin.side === "heads" ? 1 : 0),
+        numTails: curState.numTails + (newCoin.side === "tails" ? 1 : 0),
       };
     });
   }
@@ -37,9 +40,10 @@ class CoinContainer extends Component {
     return (
       <div className="CoinContainer">
         <h2>Heads or Tails?</h2>
+        {this.state.currentCoin && <Coin info={this.state.currentCoin} />}
         <button onClick={this.handleClick}>Flip The Coin</button>
         <p>
-          Out of {this.state.numFlips}, there have been {this.state.numHeads}{" "}
+          Out of {this.state.numFlips}, there have been {this.state.numHeads}
           heads and {this.state.numTails} tails
         </p>
       </div>
